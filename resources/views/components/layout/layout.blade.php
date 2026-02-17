@@ -14,6 +14,16 @@
     <main class="max-w-7xl mx-auto px-6 py-10">
         {{ $slot }}
     </main>
-</body>
+
+    <div x-data="{ greeting: 'hello' }">
+        <p x-text="greeting"></p>
+
+        <input type="text" x-model="greeting">
+    </div>
+
+    @session('success')
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition.opacity.duration.300ms
+            class="bg-primary px-4 py-3 absolute bottom-4 right-4 rounded-lg">{{ $value }}</div>
+    @endsession
 
 </html>
