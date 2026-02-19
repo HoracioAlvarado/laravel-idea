@@ -68,7 +68,9 @@
                 x-data="{
                     status: 'pending',
                     newLink: '',
-                    links: []
+                    links: [],
+                    newStep: '',
+                    steps: []
                 }"
             >
                 @csrf
@@ -119,6 +121,58 @@
                         type="textarea"
                         placeholder="Describe your idea..."
                     />
+
+                    <div>
+                        <fieldset class="space-y-3">
+                            <legend class="label">Steps</legend>
+
+                            <template
+                                x-for="(step, index) in steps"
+                                :key="step"
+                            >
+                                <div class="flex gap-x-2 items-center">
+                                    <input
+                                        type="text"
+                                        name="steps[]"
+                                        x-model="step"
+                                        readonly
+                                    >
+
+                                    <button
+                                        type="button"
+                                        @click="steps.splice(index, 1)"
+                                        aria-label="Remove this step"
+                                        class="form-muted-icon"
+                                    >
+                                        x
+                                    </button>
+                                </div>
+
+                            </template>
+
+                            <div class="flex gap-x-2 items-center">
+                                <input
+                                    x-model="newStep"
+                                    id="new-step"
+                                    data-test="new-step"
+                                    placeholder="What needs to be done?"
+                                    class="input flex-1"
+                                >
+
+                                <button
+                                    type="button"
+                                    @click="steps.push(newStep.trim()); newStep=''"
+                                    data-test="submit-new-step-button"
+                                    :disabled="newStep.trim().length === 0"
+                                    aria-label="Add a new step"
+                                    class="form-muted-icon"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+                        </fieldset>
+                    </div>
 
                     <div>
                         <fieldset class="space-y-3">
