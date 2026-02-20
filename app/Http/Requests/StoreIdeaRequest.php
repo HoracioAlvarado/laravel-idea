@@ -34,6 +34,7 @@ class StoreIdeaRequest extends FormRequest
             'links.*' => ['url'],
             'steps' => ['nullable', 'array'],
             'steps.*' => ['string', 'max:255'],
+            'image' => ['nullable', 'image', 'max:5120'],
         ];
     }
 }

@@ -38,6 +38,16 @@
 
                 @forelse($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
+                        @if ($idea->image_path)
+                            <div class="mb-4 -mx-4 -mt-4 rounded-t-lg overflow-hidden">
+                                <img
+                                    src="{{ asset('storage/' . $idea->image_path) }}"
+                                    alt=""
+                                    class="w-full h-auto object-cover"
+                                >
+                            </div>
+                        @endif
+
                         <h3 class="text-foreground text-lg">{{ $idea->title }}</h3>
                         <div class="mt-1">
                             <x-idea.status-label status="{{ $idea->status }}">
@@ -72,6 +82,7 @@
                     newStep: '',
                     steps: []
                 }"
+                enctype="multipart/form-data"
             >
                 @csrf
 
@@ -121,6 +132,20 @@
                         type="textarea"
                         placeholder="Describe your idea..."
                     />
+
+                    <div class="space-y-2">
+                        <label
+                            for="image"
+                            class="label"
+                        >Featured Image</label>
+
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                        >
+                        <x-form.error name="image" />
+                    </div>
 
                     <div>
                         <fieldset class="space-y-3">
