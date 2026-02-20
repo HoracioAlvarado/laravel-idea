@@ -7,7 +7,14 @@
             >Back to Ideas
             </a>
             <div class="gap-x-3 flex items-center">
-                <button class="btn btn-outlined">Edit Idea</button>
+                <button
+                    x-data
+                    class="btn btn-outlined"
+                    data-test="edit-idea-button"
+                    @click="$dispatch('open-modal', 'edit-idea')"
+                >
+                    Edit Idea
+                </button>
 
                 <form
                     action="{{ route('idea.destroy', $idea) }}"
@@ -43,12 +50,13 @@
 
             </div>
 
-
-            <x-card class="mt-6">
-                <div class="text-foreground max-w-none cursor-pointer">
-                    {{ $idea->description }}
-                </div>
-            </x-card>
+            @if ($idea->description)
+                <x-card class="mt-6">
+                    <div class="text-foreground max-w-none cursor-pointer">
+                        {{ $idea->description }}
+                    </div>
+                </x-card>
+            @endif
             @if ($idea->steps->count())
                 <div>
                     <h3 class="font-bold text-xl mt-6">Steps</h3>
@@ -95,5 +103,7 @@
                 </div>
             @endif
         </div>
+
+        <x-idea.modal :idea="$idea" />
     </div>
 </x-layout>

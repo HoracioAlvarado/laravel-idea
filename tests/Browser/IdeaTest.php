@@ -1,11 +1,44 @@
 <?php
 
+use App\Models\Idea;
 use App\Models\User;
 
 it('creates a new Idea', function () {
     $this->actingAs($user = User::factory()->create());
 
     visit('/ideas')
+        ->click('@create-idea-button')
+        ->fill('title', 'Some Example Title')
+        ->click('@button-status-completed')
+        ->fill('description', 'This is a description')
+        ->fill('@new-link', 'https://laracasts.com')
+        ->click('@submit-new-link-button')
+        ->fill('@new-link', 'https://laravel.com')
+        ->click('@submit-new-link-button')
+        ->fill('@new-step', 'Do something.')
+        ->click('@submit-new-step-button')
+        ->click('Create')
+
+        ->assertPathIs('/ideas');
+
+    expect($idea = $user->ideas->first())->toMatchArray([
+        'title' => 'Some Example Title',
+        'status' => 'completed',
+        'description' => 'This is a description',
+        'links' => ['https://laracasts.com', 'https://laravel.com'],
+    ]);
+
+    expect($idea->steps)->toHaveCount(1);
+
+});
+
+it('edits an existing Idea', function () {
+    $this->actingAs($user = User::factory()->create());
+
+    $idea = Idea::factory()->for($user)->create();
+
+    visit(route('idea.show', $idea))
+        ->click('@edit-idea-button')
         ->click('@create-idea-button')
         ->fill('title', 'Some Example Title')
         ->click('@button-status-completed')
