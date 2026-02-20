@@ -13,9 +13,9 @@
             newLink: '',
             links: @js(old('links', $idea->links ?? [])),
             newStep: '',
-            steps: @js(old('steps', $idea->steps->map(fn($step) => $step->description)))
+            steps: @js(old('steps', $idea->steps->map->only(['id', 'description', 'completed'])))
         }"
-        enctype="multipart/form-data"
+        {{-- enctype="multipart/form-data" --}}
     >
         @csrf
 
@@ -107,13 +107,20 @@
 
                     <template
                         x-for="(step, index) in steps"
-                        :key="step"
+                        :key="index"
                     >
                         <div class="flex gap-x-2 items-center">
+
                             <input
                                 type="text"
-                                name="steps[]"
-                                x-model="step"
+                                :name="`steps[${index}][description]`"
+                                x-model="step.description"
+                                readonly
+                            >
+                            <input
+                                type="hidden"
+                                :name="`steps[${index}][completed]`"
+                                x-model="step.completed ? '1' : '0'"
                                 readonly
                             >
 
@@ -137,10 +144,12 @@
                             placeholder="What needs to be done?"
                             class="input flex-1"
                         >
-
                         <button
                             type="button"
-                            @click="steps.push(newStep.trim()); newStep=''"
+                            @click="
+                                steps.push({description: newStep.trim(), completed: false }); 
+                                newStep=''
+                            "
                             data-test="submit-new-step-button"
                             :disabled="newStep.trim().length === 0"
                             aria-label="Add a new step"
