@@ -82,7 +82,7 @@
                     newStep: '',
                     steps: []
                 }"
-                enctype="multipart/form-data"
+                {{-- enctype="multipart/form-data" --}}
             >
                 @csrf
 

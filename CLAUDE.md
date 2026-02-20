@@ -54,6 +54,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 ## Git Commits
 
+- Before committing, run the `laravel-simplifier` Task agent on recently modified PHP files to check for improvements. Present the suggestions to the user and ask whether to apply, skip, or modify each one before proceeding with the commit.
 - Stage all relevant modified files before committing (exclude .env, logs, etc.).
 - Always include a bullet-point body describing the changes. Use imperative verbs and backticks for code references, e.g.:
   - Add `image` validation rule to `StoreIdeaRequest`

@@ -13,7 +13,8 @@ Route::get('/ideas', [IdeaController::class, 'index'])
     ->middleware('auth');
 Route::get('/ideas/{idea}', [IdeaController::class, 'show'])
     ->name('idea.show')
-    ->middleware('auth');
+    ->middleware(['auth']);
+// ->can('workWith', 'idea')
 Route::post('/ideas', [IdeaController::class, 'store'])
     ->name('idea.store')
     ->middleware('auth');
