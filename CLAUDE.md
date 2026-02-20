@@ -52,6 +52,14 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - You must only create documentation files if explicitly requested by the user.
 
+## Git Commits
+
+- Stage all relevant modified files before committing (exclude .env, logs, etc.).
+- Always include a bullet-point body describing the changes. Use imperative verbs and backticks for code references, e.g.:
+  - Add `image` validation rule to `StoreIdeaRequest`
+  - Update `IdeaController@store` to handle image uploads
+  - Display featured image on the idea show page
+
 ## Replies
 
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
